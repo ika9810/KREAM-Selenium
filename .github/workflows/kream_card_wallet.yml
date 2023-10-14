@@ -8,24 +8,21 @@ on:
     
 jobs:
   build:
-    runs-on: ubuntu-18.04 # 우분투 18.04 에서
-    strategy:
-      matrix:
-        python-version: [3.7] # 파이썬 3.7 버전으로
-
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up python ${{ matrix.python-version }}
+      with:
+        ref: main
+    - name: Setup Python
       uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
+          python-version: '3.x'
+          architecture: 'x64'
     
     - name: Install python package # 파이썬 관련 패키지를 설치하고
       run: |        
         pip install selenium
         pip install requests        
-        pip install twython
-        pip install pillow
     
     - name: Install ubuntu package # 우분투 관련 패키지도 설치한 후
       run: |        
@@ -39,4 +36,3 @@ jobs:
     - name: Run! # send_to_weather.py 파일을 실행하시오! 
       run: | 
         python ./kream_card_wallet.py 
-
